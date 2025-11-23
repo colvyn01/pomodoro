@@ -1,0 +1,298 @@
+/* --- DESIGN SYSTEM & VARIABLES --- */
+:root {
+    /* TE / German Industrial Palette */
+    --bg-color: #e3e3e3;
+    --surface-color: #f0f0f0;
+    --text-main: #111111;
+    --text-dim: #666666;
+    --accent-color: #ff4d00; /* International Orange */
+    --border-color: #111111;
+    --border-width: 2px;
+    
+    /* Spacing & Layout */
+    --grid-gap: 1rem;
+    --radius: 4px; /* Slight rounding, mostly boxy */
+    
+    /* Typography */
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", monospace;
+}
+
+/* --- RESET & BASE --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Prevent scroll bounce */
+}
+
+/* --- LAYOUT CONTAINER --- */
+.device-shell {
+    background: var(--surface-color);
+    border: var(--border-width) solid var(--border-color);
+    width: 100%;
+    max-width: 420px;
+    height: 100%;
+    max-height: 800px;
+    display: grid;
+    grid-template-rows: auto 1fr auto auto; /* Header, Vis, Controls, Footer */
+    position: relative;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 450px) {
+    .device-shell { border: none; height: 100vh; max-height: 100vh; box-shadow: none; }
+}
+
+/* --- HEADER --- */
+header {
+    padding: 1.5rem;
+    border-bottom: var(--border-width) solid var(--border-color);
+}
+h1 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 800;
+}
+p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    line-height: 1.4;
+    font-family: var(--font-mono);
+}
+
+/* --- VISUALIZER (THE VORTEX) --- */
+.visualizer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-image: radial-gradient(#ccc 1px, transparent 1px);
+    background-size: 20px 20px; /* Engineering grid background */
+}
+
+.ring-container {
+    width: 260px;
+    height: 260px;
+    position: relative;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg); /* Start form top */
+}
+
+/* The background track */
+.ring-track {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 8;
+}
+
+/* The moving progress bar */
+.ring-progress {
+    fill: none;
+    stroke: var(--accent-color);
+    stroke-width: 8;
+    stroke-linecap: square; /* Engineered look */
+    stroke-dasharray: 753; /* 2 * PI * r(120) approx */
+    stroke-dashoffset: 753;
+    transition: stroke-dashoffset 0.1s linear;
+}
+
+/* Center Data Display */
+.readout {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+}
+
+.phase-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+}
+
+.timer-display {
+    font-family: var(--font-mono);
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -2px;
+    display: block;
+}
+
+/* --- CONTROL SURFACE --- */
+.controls-area {
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    border-top: var(--border-width) solid var(--border-color);
+    background: var(--bg-color);
+}
+
+.btn {
+    appearance: none;
+    background: var(--surface-color);
+    border: var(--border-width) solid var(--border-color);
+    color: var(--text-main);
+    padding: 1rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 0 var(--text-main);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+    background: var(--accent-color);
+    color: white;
+}
+
+.btn-reset {
+    grid-column: span 1;
+}
+
+.btn-main {
+    grid-column: span 2;
+    background: var(--text-main);
+    color: white;
+}
+
+.btn-main:hover {
+    background: #333;
+    color: white;
+}
+
+/* --- SETTINGS / PARAMETERS --- */
+.settings-area {
+    padding: 1.5rem;
+    background: var(--surface-color);
+    border-top: var(--border-width) solid var(--border-color);
+}
+
+.params-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 1rem;
+}
+
+.param-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.param-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+}
+
+/* Styled Number Inputs */
+input[type="number"] {
+    width: 100%;
+    background: transparent;
+    border: var(--border-width) solid #ccc;
+    padding: 8px 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-main);
+    appearance: textfield;
+    -moz-appearance: textfield; /* Remove spinner arrows FF */
+}
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; margin: 0; 
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background: #fff;
+}
+
+/* Toggle Switch (Sound) */
+.options-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    border-top: 1px solid #ccc;
+    padding-top: 1rem;
+}
+
+.sound-toggle {
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    cursor: pointer;
+}
+
+.checkbox-visual {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--text-main);
+    margin-right: 8px;
+    display: inline-block;
+    position: relative;
+}
+
+input[type="checkbox"]:checked + .checkbox-visual::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px; right: 2px; bottom: 2px;
+    background: var(--accent-color);
+}
+
+/* Accessiblity: visually hidden real checkbox */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+/* --- ACCESSIBILITY: REDUCED MOTION --- */
+@media (prefers-reduced-motion: reduce) {
+    .ring-progress { transition: none; }
+}

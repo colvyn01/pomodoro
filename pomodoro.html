@@ -1,0 +1,78 @@
+<!-- pomodoro.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vortex Pomodoro</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="device-shell">
+    <!-- HEADER -->
+    <header>
+      <h1>Vortex</h1>
+      <p>Pomodoro Timer</p>
+    </header>
+
+    <!-- VISUALIZER -->
+    <section class="visualizer">
+      <div class="ring-container">
+        <svg>
+          <circle class="ring-track" cx="50%" cy="50%" r="120"></circle>
+          <circle id="pomo-progress-ring" class="ring-progress" cx="50%" cy="50%" r="120"></circle>
+        </svg>
+        <div class="readout">
+          <span id="pomo-phase-label" class="phase-label">READY</span>
+          <span id="pomo-timer-display" class="timer-display">25:00</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTROLS -->
+    <section class="controls-area">
+      <button id="pomo-btn-reset" class="btn btn-reset">Reset</button>
+      <button id="pomo-btn-toggle" class="btn btn-main">Start</button>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="settings-area">
+      <div class="params-grid">
+        
+        <div class="param-group">
+          <label class="param-label" for="pomo-focus">FOCUS</label>
+          <input type="number" id="pomo-focus" value="25" min="5" max="9000">
+        </div>
+
+        <div class="param-group">
+          <label class="param-label" for="pomo-short">SHORT</label>
+          <input type="number" id="pomo-short" value="5" min="1" max="9000">
+        </div>
+
+        <div class="param-group">
+          <label class="param-label" for="pomo-long">LONG</label>
+          <input type="number" id="pomo-long" value="15" min="5" max="9000">
+        </div>
+
+        <div class="param-group">
+          <label class="param-label" for="pomo-cycles">CYCLES</label>
+          <input type="number" id="pomo-cycles" value="4" min="1" max="9000">
+        </div>
+
+      </div>
+
+      <div class="options-row">
+        <label class="sound-toggle">
+          <input type="checkbox" class="sr-only" checked>
+          <span class="checkbox-visual"></span>
+          Enable Sound
+        </label>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="pomodoro.js"></script>
+</body>
+</html>
